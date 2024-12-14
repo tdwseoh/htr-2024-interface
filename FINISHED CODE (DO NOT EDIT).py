@@ -94,13 +94,16 @@ else:  # For histology and bees datasets
     download_file(image_url, "images.npy")
     download_file(labels_url, "labels.npy")
 
-    # Load the downloaded data
+    # Load the downloaded data and close the file
     images = np.load("images.npy")
     labels = np.load("labels.npy")
 
-    # Clean up: remove files after loading
-    os.remove("images.npy")
-    os.remove("labels.npy")
+    # Clean up: remove files after loading, ensure that the files are not in use
+    try:
+        os.remove("images.npy")
+        os.remove("labels.npy")
+    except PermissionError:
+        print("The file is being used by another process. Could not delete.")
 
 # ==================== Data Preprocessing ====================
 
@@ -140,7 +143,7 @@ X_train_final = np.concatenate((X_train, X_train_augment), axis=0)
 y_train_final = np.concatenate((y_train, y_train_augment), axis=0)
 
 # Train the model
-cnn_model.fit(X_train_final, y_train_final, epochs=35, validation_data=(X_test, y_test))
+cnn_model.fit(X_train_final, y_train_final, epochs=2, validation_data=(X_test, y_test))
 
 # Map predictions back to class names
 one_hot_to_label = {i: label for i, label in enumerate(pd.get_dummies(labels).columns)}
@@ -166,3 +169,7 @@ if uploaded_file is not None:
     st.subheader(f"Prediction Result:")
     st.write(f"Predicted Class: {class_label}")
     st.write(f"Confidence: {confidence:.2f}")
+
+# ==================== Speech Recognition =====================
+
+

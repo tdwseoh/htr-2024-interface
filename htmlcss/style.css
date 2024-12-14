@@ -29,11 +29,17 @@
     max-width: 650px;
 }
 .slide1{
-    background: linear-gradient(454deg, #4f4080, #9553ff)
+    background: linear-gradient(454deg, #000000, #171717, #000000)
 }
 .slide2{
-    background: linear-gradient(454deg, #404c80, #53ff88)
+    background: linear-gradient(454deg, #4f4080, #9553ff)
 }
 .slide3{
+    background: linear-gradient(454deg, #404c80, #53ff88)
+}
+.slide4{
     background: linear-gradient(454deg, #4f4080, #ff5353)
+}
+.slide5{
+    background: linear-gradient(454deg, #6c4362, #9d526a)
 }
